@@ -11,6 +11,11 @@ namespace RPG.CameraUI
 		[SerializeField] Texture2D walkCursor = null;
         [SerializeField] Texture2D enemyCursor = null;
 		[SerializeField] Vector2 cursorHotspot = new Vector2(0, 0);
+        [SerializeField] float minZoom = 10f;
+        [SerializeField] float maxZoom = 30f;
+        [SerializeField] float scrollSpeed = 5f;
+
+        float cameraDistance = 0f;
 
         const int POTENTIALLY_WALKABLE_LAYER = 8;
         float maxRaycastDepth = 100f; // Hard coded value
@@ -36,6 +41,13 @@ namespace RPG.CameraUI
             {
                 PerformRaycasts();
             }
+            cameraDistance += Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+            if (transform.localPosition.y < minZoom && cameraDistance > 0)
+                cameraDistance = 0;
+            if (transform.localPosition.y > maxZoom && cameraDistance < 0)
+                cameraDistance = 0;
+            transform.Translate(new Vector3(0, 0, cameraDistance) * 2, Space.Self);
+            cameraDistance = 0;
         }
 
         void PerformRaycasts()
