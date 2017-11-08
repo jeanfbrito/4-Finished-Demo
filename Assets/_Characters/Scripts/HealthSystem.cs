@@ -11,6 +11,7 @@ namespace RPG.Characters
     {
         [SerializeField] float maxHealthPoints = 100f;
         [SerializeField] Image healthBar;
+        [SerializeField] Text nameBar;
         [SerializeField] AudioClip[] damageSounds;
         [SerializeField] AudioClip[] deathSounds;
         [SerializeField] float deathVanishSeconds = 2.0f;
@@ -37,12 +38,37 @@ namespace RPG.Characters
         {
             UpdateHealthBar();
         }
-
+       
         void UpdateHealthBar()
         {
             if (healthBar) // Enemies may not have health bars to update
             {
                 healthBar.fillAmount = healthAsPercentage;
+                if (healthAsPercentage > 0.95)
+                {
+                    healthBar.color = new Color32(0, 200, 0, 255);
+                    nameBar.color = new Color32(0, 200, 0, 255);
+                }
+                else if (healthAsPercentage > 0.65)
+                {
+                    healthBar.color = new Color32(76, 153, 76, 255);
+                    nameBar.color = new Color32(76, 153, 76, 255);
+                }
+                else if (healthAsPercentage > 0.30)
+                {
+                    healthBar.color = new Color32(164, 164, 0, 255);
+                    nameBar.color = new Color32(164, 164, 0, 255);
+                }
+                else if(healthAsPercentage > 0.1)
+                {
+                    healthBar.color = new Color32(224, 51, 51, 255);
+                    nameBar.color = new Color32(224, 51, 51, 255);
+                }
+                else 
+                {
+                    healthBar.color = new Color32(128, 0, 0, 255);
+                    nameBar.color = new Color32(128, 0, 0, 255);
+                }
             }
         }
 
