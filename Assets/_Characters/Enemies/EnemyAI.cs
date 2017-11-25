@@ -32,33 +32,36 @@ namespace RPG.Characters
 
         void Update()
         {
-            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            WeaponSystem weaponSystem = GetComponent<WeaponSystem>();
-            currentWeaponRange = weaponSystem.GetCurrentWeapon().GetMaxAttackRange();
+            if (character.isAlive)
+            {
+                distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+                WeaponSystem weaponSystem = GetComponent<WeaponSystem>();
+                currentWeaponRange = weaponSystem.GetCurrentWeapon().GetMaxAttackRange();
 
-            bool inWeaponCircle = distanceToPlayer <= currentWeaponRange;
-            bool inChaseRing = distanceToPlayer > currentWeaponRange 
-                                 && 
-                                 distanceToPlayer <= chaseRadius;
-            bool outsideChaseRing = distanceToPlayer > chaseRadius;
+                bool inWeaponCircle = distanceToPlayer <= currentWeaponRange;
+                bool inChaseRing = distanceToPlayer > currentWeaponRange
+                                     &&
+                                     distanceToPlayer <= chaseRadius;
+                bool outsideChaseRing = distanceToPlayer > chaseRadius;
 
-            if (outsideChaseRing)
-            {
-                StopAllCoroutines();
-                weaponSystem.StopAttacking();
-                StartCoroutine(Patrol());
-            }
-            if (inChaseRing)
-            {
-                StopAllCoroutines();
-                weaponSystem.StopAttacking();
-                StartCoroutine(ChasePlayer());
-            }
-            if (inWeaponCircle)
-            {
-                StopAllCoroutines();
-                state = State.attacking;
-                weaponSystem.AttackTarget(player.gameObject);
+                if (outsideChaseRing)
+                {
+                    StopAllCoroutines();
+                    weaponSystem.StopAttacking();
+                    StartCoroutine(Patrol());
+                }
+                if (inChaseRing)
+                {
+                    StopAllCoroutines();
+                    weaponSystem.StopAttacking();
+                    StartCoroutine(ChasePlayer());
+                }
+                if (inWeaponCircle)
+                {
+                    StopAllCoroutines();
+                    state = State.attacking;
+                    weaponSystem.AttackTarget(player.gameObject);
+                }
             }
         }
 
