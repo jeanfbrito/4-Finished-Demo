@@ -37,7 +37,7 @@ namespace RPG.Characters
         Rigidbody ridigBody;
         float turnAmount;
         float forwardAmount;
-        bool isAlive = true;
+        public bool isAlive = true;
 
         void Awake()
         {

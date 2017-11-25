@@ -15,7 +15,9 @@ namespace RPG.Characters
         // Update is called once per frame 
         void LateUpdate()
         {
-            transform.LookAt(cameraToLookAt.transform);
+            //transform.LookAt(cameraToLookAt.transform);
+            transform.LookAt(transform.position + cameraToLookAt.transform.rotation * Vector3.forward,
+            cameraToLookAt.transform.rotation * Vector3.up);
         }
     }
 }
