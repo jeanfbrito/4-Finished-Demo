@@ -36,6 +36,7 @@ namespace RPG.CameraUI
             if (EventSystem.current.IsPointerOverGameObject())
             {
                 // Impliment UI interaction
+                PerformRaycasts(); // add to stop UI problem
             }
             else
             {
