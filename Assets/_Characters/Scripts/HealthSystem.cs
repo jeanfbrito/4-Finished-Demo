@@ -16,6 +16,8 @@ namespace RPG.Characters
         [SerializeField] AudioClip[] deathSounds;
         [SerializeField] float deathVanishSeconds = 2.0f;
 
+        [SerializeField] HUDText hudText;
+
         const string DEATH_TRIGGER = "Death";
 
         float currentHealthPoints; 
@@ -30,6 +32,7 @@ namespace RPG.Characters
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
             characterMovement = GetComponent<Character>();
+            hudText = GetComponent<HUDText>();
 
             currentHealthPoints = maxHealthPoints;
         }
@@ -74,6 +77,7 @@ namespace RPG.Characters
 
         public void TakeDamage(float damage)
         {
+            hudText.Add(0 - damage, Color.red, 0f);
             bool characterDies = (currentHealthPoints - damage <= 0);
             currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
             var clip = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length)];
